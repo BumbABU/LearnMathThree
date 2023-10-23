@@ -40,7 +40,6 @@ public class Booster : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
 
     public void EnableBooster(bool state)
     {
-        Debug.Log(this.gameObject.name);
         this.IsEnabled = state;
         if (state)
         {
