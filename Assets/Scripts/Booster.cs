@@ -159,7 +159,7 @@ public class Booster : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
     {
         if (this._board != null && this._tile != null)
         {
-            this._board.MakeColorBombBooster(this._tile.xIndex, this._tile.yIndex);
+            this._board.BoardFiller.MakeColorBombBooster(this._tile.xIndex, this._tile.yIndex);
         }
     }
 

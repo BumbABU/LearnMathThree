@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
@@ -18,6 +19,7 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         this.UpdateScoreText(this._currentScore);
     }
+
 
     public void UpdateScoreText(int scoreValue)
     {
@@ -47,4 +49,65 @@ public class ScoreManager : Singleton<ScoreManager>
         this._currentScore = this._counterValue;
         this.UpdateScoreText(this._currentScore);
     }
+
+    public void SetHighSocre(int score)
+    {
+        int oldHighScore = 0;
+        if (PlayerPrefs.HasKey("HiScore"))
+        {
+            oldHighScore = PlayerPrefs.GetInt("HiScore");
+        }
+
+        if (score > oldHighScore)
+        {
+            PlayerPrefs.SetInt("HiScore", score);
+        }
+    }
+
+    public string GetHighScore()
+    {
+        int highScore = 0;
+        if (PlayerPrefs.HasKey("HiScore"))
+        {
+            highScore = PlayerPrefs.GetInt("HiScore", highScore);
+        }
+        return highScore.ToString();
+    }
+
+    public void SetHighRateStarLevel(int rateStar)
+    {
+        int oldHighStar = 0;
+        int currenLevelidx = SceneManager.GetActiveScene().buildIndex;
+        string levelName = "Level" + currenLevelidx;
+        if (PlayerPrefs.HasKey(levelName))
+        {
+            oldHighStar = PlayerPrefs.GetInt(levelName);
+        }
+
+        if (rateStar > oldHighStar)
+        {
+            PlayerPrefs.SetInt(levelName, rateStar);
+        }
+    }
+
+
+    public int GetHighRateStar()
+    {
+        int rateStar = 0;
+        int currenLevelidx = SceneManager.GetActiveScene().buildIndex;
+        string levelName = "Level" + currenLevelidx;
+        if (PlayerPrefs.HasKey(levelName))
+        {
+            rateStar = PlayerPrefs.GetInt(levelName);
+        }
+        return rateStar;
+    }
+
+/*    public void ResetHighRate()
+    {
+        int currenLevelidx = SceneManager.GetActiveScene().buildIndex;
+        string levelName = "Level" + currenLevelidx;
+        PlayerPrefs.SetInt(levelName, 1);
+    }*/
+
 }

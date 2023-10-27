@@ -8,13 +8,5 @@ using UnityEngine.EventSystems;
 
 public class test : MonoBehaviour
 {
-    private void OnMouseDown()
-    {
-        Debug.Log("Hello");
-    }
-
-    private void OnMouseEnter()
-    {
-        Debug.Log(this.gameObject.name);
-    }
+   public AudioSource audioSource;
 }

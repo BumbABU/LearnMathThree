@@ -14,6 +14,7 @@ public class RectXformMover : MonoBehaviour
 
     private RectTransform _rectXform;
     private bool _isMoving = false;
+    public bool IsMoving { get { return _isMoving; } }  
 
     public void Awake()
     {

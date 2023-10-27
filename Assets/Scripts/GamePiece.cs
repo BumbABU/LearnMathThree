@@ -72,7 +72,7 @@ public class GamePiece : MonoBehaviour
                 reachedDestination = true;
                 if (this._board != null)
                 {
-                    _board.PlaceGamePiece(this, (int)destination.x, (int)destination.y);
+                    _board.BoardFiller.PlaceGamePiece(this, (int)destination.x, (int)destination.y);
                 }
                 break;
             }

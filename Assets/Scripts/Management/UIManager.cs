@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -15,9 +16,15 @@ public class UIManager : Singleton<UIManager>
     public TextMeshProUGUI MoveLeftText;
     public ScoreMeter ScoreMeter;
     public MessageWindow _messageWindow;
+    public HighScoreWindow HighScoreWindow;
+    public SettingWindow SettingWindow;
 
     public GameObject MovesCounter;
     public Timer Timer;
+
+    public bool IsSettingWindow;
+    public bool IsHighScoreWindow = false;
+    public bool IsCanTouch = true;
 
     public override void Awake()
     {
@@ -30,6 +37,10 @@ public class UIManager : Singleton<UIManager>
         {
             this._messageWindow.gameObject.SetActive(true);
         }
+    }
+
+    private void Update()
+    {
     }
 
     public void SetupCollectionGoalLayout(CollectionGoal[] collectionGoals, GameObject goalLayout, int spacingWidth)
@@ -104,4 +115,47 @@ public class UIManager : Singleton<UIManager>
             this.CollectionGoalLayout.gameObject.SetActive(state);
         }
     }
+
+
+
+    public bool IsCanShowHighScoreWindow()
+    {
+        if (this.SettingWindow.gameObject.activeInHierarchy == true)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public bool IsCanShowSettingWindow()
+    {
+        if (this.HighScoreWindow.gameObject.activeInHierarchy == true)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public void ShowHighScoreWindow()
+    {
+        if (this.IsCanShowHighScoreWindow())
+        {
+            StartCoroutine(HighScoreWindow.ShowHighScoreWindowRoutine());
+        }
+    }
+
+    public void ShowSettingWindow()
+    {
+        if(this.IsCanShowSettingWindow())
+        {
+            StartCoroutine(SettingWindow.ShowSettingWindowRoutine());
+        }
+    }
+
 }

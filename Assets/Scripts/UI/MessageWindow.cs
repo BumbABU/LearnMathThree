@@ -25,6 +25,15 @@ public class MessageWindow : MonoBehaviour
     public TextMeshProUGUI GoalText;
     public GameObject CollectionGoalLayout;
 
+    public GameObject StarPanel;
+    public GameObject GoodLuckPanel;
+    public GameObject WinButtonPanel;
+    public GameObject LoseButtonPanel;
+    public GameObject StartButton;
+
+    // Star Rating
+    public StarRating StarRating;
+
     public void ShowMessage(Sprite sprite = null, string message = "", string buttonMessage = "START")
     {
         if (this.MessageIcon != null)
@@ -103,9 +112,9 @@ public class MessageWindow : MonoBehaviour
         }
     }
 
-    public void ShowGoalImage (Sprite icon = null)
+    public void ShowGoalImage(Sprite icon = null)
     {
-        if(this.GoalImage != null && icon != null)
+        if (this.GoalImage != null && icon != null)
         {
             this.GoalImage.gameObject.SetActive(true);
             this.GoalImage.sprite = icon;
@@ -113,6 +122,56 @@ public class MessageWindow : MonoBehaviour
         else
         {
             this.GoalImage.gameObject.SetActive(false);
+        }
+    }
+
+    public void ShowButtonPanel(bool startButton = false, bool winpanel = false)
+    {
+        if (startButton)
+        {
+            this.StartButton.gameObject.SetActive(true);
+            this.WinButtonPanel.gameObject.SetActive(false);
+            this.LoseButtonPanel.gameObject.SetActive(false);
+            return;
+        }
+        else
+        {
+            this.StartButton.gameObject.SetActive(false);
+            if (winpanel)
+            {
+                this.WinButtonPanel.gameObject.SetActive(true);
+                this.LoseButtonPanel.gameObject.SetActive(false);
+            }
+            else
+            {
+                this.WinButtonPanel.gameObject.SetActive(false);
+                this.LoseButtonPanel.gameObject.SetActive(true);
+            }
+        }
+
+    }
+
+    public void ShowGoodLuckPanel(bool state)
+    {
+        if (this.GoodLuckPanel != null)
+        {
+            this.GoodLuckPanel.gameObject.SetActive(state);
+        }
+    }
+
+    public void ShowStarPanel(bool state)
+    {
+        if(this.StarPanel != null)
+        {
+            this.StarPanel.gameObject.SetActive(state);
+        }
+    }
+
+    public void RateStar(int numStar, float timeScale = 0.2f)
+    {
+        if(this.StarRating != null)
+        {
+            StartCoroutine(StarRating.RatingStarRoutine(numStar, timeScale));
         }
     }
 }

@@ -44,7 +44,7 @@ public class Tile : MonoBehaviour
     {
         if (this._board != null)
         {
-            this._board.ClickTile(this);
+            this._board.BoardInput.ClickTile(this);
         }
     }
 
@@ -52,7 +52,7 @@ public class Tile : MonoBehaviour
     {
         if (this._board != null)
         {
-            this._board.DragToTile(this);
+            this._board.BoardInput.DragToTile(this);
         }
     }
 
@@ -60,7 +60,7 @@ public class Tile : MonoBehaviour
     {
         if (this._board != null)
         {
-            this._board.ReleaseTile();
+            this._board.BoardInput.ReleaseTile();
         }
     }
 
