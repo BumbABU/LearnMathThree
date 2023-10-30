@@ -38,9 +38,9 @@ public class ScoreStar : MonoBehaviour
         {
             StarFX.Play();
         }
-        if(SoundManager.Instance != null && this.StarSound != null)
+        if(AudioManager.Instance)
         {
-            SoundManager.Instance.PlayClipAtPoint(this.StarSound, Vector3.zero, SoundManager.Instance.FxVolume);
+            AudioManager.Instance.PlaySE(AUDIO.FX_6);
         }
         yield return new WaitForSeconds(Delay);
         this.SetActive(true);

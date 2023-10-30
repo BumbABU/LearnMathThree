@@ -2,11 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SettingWindow : MonoBehaviour
 {
     private bool _isCanToch = true;
     private bool _isShowing = false;
+    public Slider BGM_Slider;
+    public Slider SE_Slider;
+
+    private void Start()
+    {
+        if (AudioManager.Instance)
+        {
+            if (this.BGM_Slider != null)
+            {
+                this.BGM_Slider.value = AudioManager.Instance.AttachBGMSource.volume;
+            }
+
+            if (this.SE_Slider != null)
+            {
+                this.SE_Slider.value = AudioManager.Instance.AttachSESource.volume;
+            }
+        }
+    }
+
+    public void ChangeBGMVol()
+    {
+        if (AudioManager.Instance)
+        {
+            AudioManager.Instance.ChangeBGMVolume(this.BGM_Slider.value);
+        }
+    }
+
+    public void ChangeSEVol()
+    {
+        if(AudioManager.Instance)
+        {
+            AudioManager.Instance.ChangeSEVolume(this.SE_Slider.value);
+        }
+    }
 
     public IEnumerator ShowSettingWindowRoutine(float timeScale = 0.2f)
     {

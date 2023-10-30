@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(LevelGoal))]
 public class GameManager : Singleton<GameManager>
 {
+    public int ColorBombBooster = 1;
+    public int ZapBooster = 3;
+    public int TimeBooster = 4;
     private bool _isReadyToBegin = false;
     private bool _isReadyToChange = false;
     private bool _isGameOver = false;
@@ -155,19 +158,13 @@ public class GameManager : Singleton<GameManager>
         {
             this._levelGoal.StartCountdown();
         }
-        AudioSource music = null;
         while (!this._isGameOver)
         {
             this._isGameOver = this._levelGoal.IsGameOver();
             this._isWinner = this._levelGoal.IsWinner();
-            if (SoundManager.Instance)
+            if (AudioManager.Instance)
             {
-                if (music == null)
-                {
-                    music = SoundManager.Instance.PlayClipAtPoint(SoundManager.Instance.MusicClips[1], Vector3.zero);
-                    music.Stop();
-                    music.Play();
-                }
+                AudioManager.Instance.PlayBGM();
             }
             yield return null;
         }
@@ -176,12 +173,18 @@ public class GameManager : Singleton<GameManager>
     private IEnumerator EndGameRoutine()
     {
         this._isReadyToChange = false;
-
+        if(AudioManager.Instance)
+        {
+            AudioManager.Instance.StopBGM();
+        }
         if (this._isWinner)
         {
             if (this.IsWinAllMap())
             {
-                yield return null;
+                if(UIManager.Instance)
+                {
+                    UIManager.Instance.ShowWinAllLevelWindow(1f);
+                }
             }
             else
             {
@@ -209,12 +212,6 @@ public class GameManager : Singleton<GameManager>
             }
 
         }
-        /*        while (!this._isReadyToChange)
-                {
-                    yield return null;
-                }
-                *//*        SceneManager.LoadScene(SceneManager.GetActiveScene().name);*//*
-                SceneManager.LoadScene("Moves");*/
     }
 
     private void ShowStartScreen()
@@ -281,9 +278,9 @@ public class GameManager : Singleton<GameManager>
                 UIManager.Instance._messageWindow.ShowGoalImage(UIManager.Instance._messageWindow.GoalFailedIcon);
             }
         }
-        if (SoundManager.Instance)
+        if(AudioManager.Instance)
         {
-            SoundManager.Instance.PlayRandomLoseSound();
+            AudioManager.Instance.PlaySE(AUDIO.LOSE);
         }
     }
 
@@ -308,9 +305,9 @@ public class GameManager : Singleton<GameManager>
                 UIManager.Instance._messageWindow.ShowGoalCaption(scoreStr, 0, 70);
             }
         }
-        if (SoundManager.Instance)
+        if(AudioManager.Instance)
         {
-            SoundManager.Instance.PlayRandomWinSound();
+            AudioManager.Instance.PlaySE(AUDIO.WIN_1);
         }
     }
 
@@ -332,10 +329,9 @@ public class GameManager : Singleton<GameManager>
                     UIManager.Instance.ScoreMeter.UpdateScoreMetter(ScoreManager.Instance.CurrentScore, this._levelGoal.ScoreStar);
                 }
             }
-
-            if (SoundManager.Instance && gamePiece.ClearSound != null)
+            if (AudioManager.Instance)
             {
-                SoundManager.Instance.PlayClipAtPoint(gamePiece.ClearSound, Vector3.zero, SoundManager.Instance.FxVolume);
+                AudioManager.Instance.PlaySE(AUDIO.FX_5);
             }
         }
     }
@@ -408,7 +404,16 @@ public class GameManager : Singleton<GameManager>
 
     public void PlayAgain()
     {
+        if(Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void PlayBeginAgain()
+    {
+        SceneManager.LoadScene(0);
     }
 
 }

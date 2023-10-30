@@ -48,9 +48,9 @@ public class Timer : MonoBehaviour
             {
                 this._flashRoutine = FlashRoutine(ClockImage, FlashColor, this.FlashInterval);
                 StartCoroutine(this._flashRoutine);
-                if (SoundManager.Instance && this.FlashBeep != null)
+                if(AudioManager.Instance)
                 {
-                    SoundManager.Instance.PlayClipAtPoint(this.FlashBeep, Vector3.zero, SoundManager.Instance.FxVolume, false);
+                    AudioManager.Instance.PlaySE(AUDIO.FX_1);
                 }
             }
         }

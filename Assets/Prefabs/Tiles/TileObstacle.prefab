@@ -75,8 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cad4868e50631e44cb497a651f21ea05, type: 3}
-  m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
+  m_Sprite: {fileID: 21300000, guid: 4f42d54b146c20048b0fb800bbbfd8ae, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -101,6 +101,9 @@ MonoBehaviour:
   xIndex: 0
   yIndex: 0
   TileType: 1
+  BreakableValue: 0
+  BreakableSprites: []
+  NormalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!61 &1939124346532447126
 BoxCollider2D:
   m_ObjectHideFlags: 0

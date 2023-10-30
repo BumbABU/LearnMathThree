@@ -20,6 +20,7 @@ public class UIManager : Singleton<UIManager>
     public SettingWindow SettingWindow;
 
     public GameObject MovesCounter;
+    public WinAllLevel WinAllLevelWindow;
     public Timer Timer;
 
     public bool IsSettingWindow;
@@ -158,4 +159,8 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
+    public void ShowWinAllLevelWindow(float timeScale = 0.2f)
+    {
+        StartCoroutine(WinAllLevelWindow.ShowWinAllLevelWindow(timeScale));
+    }
 }

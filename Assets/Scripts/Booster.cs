@@ -15,6 +15,9 @@ public class Booster : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
 
     public static GameObject ActiveBooster;
     public TextMeshProUGUI InstructionsText;
+    public TextMeshProUGUI ZapBoosterText;
+    public TextMeshProUGUI ColorBombBoosterText;
+    public TextMeshProUGUI TimeBoosterText;
     public string Instructions = "drag over game piece to remove";
 
     public bool IsEnabled = false;
@@ -59,6 +62,9 @@ public class Booster : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
                 this.InstructionsText.text = this.Instructions;
             }
         }
+        this.UpdateColorBombBoosterText();
+        this.UpdateTimeBoosterText();
+        this.UpdateZapBoosterText();
     }
 
     public void DisableOtherBooster()
@@ -143,12 +149,22 @@ public class Booster : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
     {
         if (this._board != null && this._tile != null)
         {
+            if (GameManager.Instance)
+            {
+                if (GameManager.Instance.ZapBooster <= 0) return;
+                GameManager.Instance.ZapBooster--;
+            }
             this._board.ClearAndRefillBoard(this._tile.xIndex, this._tile.yIndex);
         }
     }
 
     public void AddTime()
     {
+        if (GameManager.Instance)
+        {
+            if (GameManager.Instance.TimeBooster <= 0) return;
+            GameManager.Instance.TimeBooster--;
+        }
         if (GameManager.Instance != null)
         {
             GameManager.Instance.AddTime(this.BoostTime);
@@ -159,6 +175,11 @@ public class Booster : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
     {
         if (this._board != null && this._tile != null)
         {
+            if (GameManager.Instance)
+            {
+                if (GameManager.Instance.ColorBombBooster <= 0) return;
+                GameManager.Instance.ColorBombBooster--;
+            }
             this._board.BoardFiller.MakeColorBombBooster(this._tile.xIndex, this._tile.yIndex);
         }
     }
@@ -174,6 +195,39 @@ public class Booster : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
         if(!this.IsDraggable)
         {
             this.EnableBooster(false);
+        }
+    }
+
+    public void UpdateZapBoosterText ()
+    {
+        if(this.ZapBoosterText != null)
+        {
+            if(GameManager.Instance)
+            {
+                this.ZapBoosterText.text = GameManager.Instance.ZapBooster.ToString();
+            }
+        }
+    }
+
+    public void UpdateColorBombBoosterText()
+    {
+        if (this.ColorBombBoosterText != null)
+        {
+            if (GameManager.Instance)
+            {
+                this.ColorBombBoosterText.text = GameManager.Instance.ColorBombBooster.ToString();
+            }
+        }
+    }
+
+    public void UpdateTimeBoosterText()
+    {
+        if (this.TimeBoosterText != null)
+        {
+            if (GameManager.Instance)
+            {
+                this.TimeBoosterText.text = GameManager.Instance.TimeBooster.ToString();
+            }
         }
     }
 }

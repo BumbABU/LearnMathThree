@@ -114,7 +114,10 @@ public class Board : MonoBehaviour
 
     public void SwitchTile(Tile clickedTile, Tile targetTile)
     {
-        StartCoroutine(SwitchTileRoutine(clickedTile, targetTile));
+        if(clickedTile.TileType != TileType.Obstacle && targetTile.TileType != TileType.Obstacle)
+        {
+            StartCoroutine(SwitchTileRoutine(clickedTile, targetTile));
+        }
     }
 
     private IEnumerator SwitchTileRoutine(Tile clickedTile, Tile targetTile)
@@ -254,9 +257,9 @@ public class Board : MonoBehaviour
             else
             {
                 this.ScoreMultiplier++;
-                if (SoundManager.Instance)
+                if(AudioManager.Instance)
                 {
-                    SoundManager.Instance.PlayRandomBonusSound();
+                    AudioManager.Instance.PlaySE(AUDIO.FX_4);
                 }
                 yield return StartCoroutine(ClearAndCollapseRoutine(matchesPieces));
                 break; // còn nghi vấn

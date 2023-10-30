@@ -39,7 +39,6 @@ public class GamePiece : MonoBehaviour
     private Board _board;
 
     public int ScoreValue = 20;
-    public AudioClip ClearSound;
     public void Init(Board board)
     {
         this._board = board;
