@@ -51,18 +51,14 @@ public class Tile : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             Vector3 point = Camera.main.ScreenToWorldPoint(touch.position);
-            Debug.Log("RUN1");
             switch (touch.phase)
             {
                 case TouchPhase.Began:
                     RaycastHit2D hit = Physics2D.Raycast(point, Vector2.zero);
-                    Debug.Log("RUN2");
                     if (hit && hit.collider.gameObject.CompareTag("Tile"))
                     {
-                        Debug.Log("RUN3");
                         if (this._board != null)
                         {
-                            Debug.Log("RUN4");
                             this._board.BoardInput.ClickTile(hit.collider.gameObject.GetComponent<Tile>());
                         }
                     }

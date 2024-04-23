@@ -81,7 +81,7 @@ public class Booster : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
 
     public void ToggleBooster()
     {
-        // this.EnableBooster(!IsEnabled);
+         this.EnableBooster(!IsEnabled);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -100,9 +100,9 @@ public class Booster : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
         if (this.IsDraggable && this.IsEnabled && !this.IsLocked && Camera.main != null)
         {
             Vector3 screenPosition;
+            Debug.Log("Run");
             RectTransformUtility.ScreenPointToWorldPointInRectangle(this._rectXForm, eventData.position, Camera.main, out screenPosition);
             this.gameObject.transform.position = screenPosition;
-
             RaycastHit2D hit = Physics2D.Raycast(screenPosition, Vector3.forward, Mathf.Infinity);
             if (hit.collider != null)
             {
@@ -186,13 +186,15 @@ public class Booster : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragH
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("Down");
         this.EnableBooster(true);
         this.IsDraggable = false;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if(!this.IsDraggable)
+        Debug.Log("Up");
+        if (!this.IsDraggable)
         {
             this.EnableBooster(false);
         }
