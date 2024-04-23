@@ -26,6 +26,11 @@ public class Tile : MonoBehaviour
         this._sprite = GetComponent<SpriteRenderer>();
     }
 
+    private void Update()
+    {
+        this.TouchInput();
+    }
+
     public void Init(int x, int y, Board board)
     {
         this.xIndex = x;
@@ -40,7 +45,49 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void OnMouseDown()
+    public void TouchInput()
+    {
+        if (Input.touchCount != 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            Vector3 point = Camera.main.ScreenToWorldPoint(touch.position);
+            Debug.Log("RUN1");
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    RaycastHit2D hit = Physics2D.Raycast(point, Vector2.zero);
+                    Debug.Log("RUN2");
+                    if (hit && hit.collider.gameObject.CompareTag("Tile"))
+                    {
+                        Debug.Log("RUN3");
+                        if (this._board != null)
+                        {
+                            Debug.Log("RUN4");
+                            this._board.BoardInput.ClickTile(hit.collider.gameObject.GetComponent<Tile>());
+                        }
+                    }
+                    break;
+                case TouchPhase.Moved:
+                    RaycastHit2D hitDrag = Physics2D.Raycast(point, Vector2.zero);
+                    if (hitDrag && hitDrag.collider.gameObject.CompareTag("Tile"))
+                    {
+                        if (this._board != null)
+                        {
+                            this._board.BoardInput.DragToTile(hitDrag.collider.gameObject.GetComponent<Tile>());
+                        }
+                    }
+                    break;
+                case TouchPhase.Ended:
+                    if (this._board != null)
+                    {
+                        this._board.BoardInput.ReleaseTile();
+                    }
+                    break;
+            }
+        }
+    }
+
+/*    public void OnMouseDown()
     {
         if (this._board != null)
         {
@@ -62,7 +109,7 @@ public class Tile : MonoBehaviour
         {
             this._board.BoardInput.ReleaseTile();
         }
-    }
+    }*/
 
     public void BreakTile()
     {

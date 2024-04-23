@@ -8,5 +8,4 @@ using UnityEngine.EventSystems;
 
 public class test : MonoBehaviour
 {
-   public AudioSource audioSource;
 }
